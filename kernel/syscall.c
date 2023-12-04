@@ -164,11 +164,11 @@ syscall(void)
   int num;
   struct proc *p = myproc();
 
-  num = p->trapframe->a7;
+  num = p->trapframe->a7;  // a7 寄存器存放系统调用索引号  例：SYS_read = 5
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     p->trapframe->a0 = syscalls[num]();
     if(p->tracemask && (p->tracemask & (1 << num))) {   // 判断当前进程是否追踪，并且当前系统调用是否要追踪
-      printf("%d: syscall %s -> %d\n", p->pid, sysnames[num], p->trapframe->a0);
+      printf("%d: syscall %s -> %d\n", p->pid, sysnames[num], p->trapframe->a0);  // a0 寄存器保存返回值
     }
   } else {
     printf("%d %s: unknown sys call %d\n",
