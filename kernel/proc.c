@@ -127,6 +127,8 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  p->tracemask = 0;   // 新的进程默认不追踪
+
   return p;
 }
 
@@ -294,6 +296,7 @@ fork(void)
   pid = np->pid;
 
   np->state = RUNNABLE;
+  np->tracemask = p->tracemask;   // 子代继承父亲的追踪标志
 
   release(&np->lock);
 

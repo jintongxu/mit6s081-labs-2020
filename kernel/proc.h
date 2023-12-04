@@ -103,4 +103,12 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  /*
+    这个存的是要该进程要追踪哪个系统调用
+    tracemask & (1 << num) > 0   表示系统追踪 num 号系统调用 从右向左数（从0开始）第几位被置为1这个位置号就是系统调用号
+    假如 tracemask = 32 ---- read  因为 1<<SYS_read = 32
+    假如 tracemask = 2147583647   ---- 追踪所有系统调用，低31位全部置1了
+  */
+  uint64 tracemask;    
 };
