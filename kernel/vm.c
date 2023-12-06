@@ -351,20 +351,36 @@ uvmclear(pagetable_t pagetable, uint64 va)
 // Copy from kernel to user.
 // Copy len bytes from src to virtual address dstva in a given page table.
 // Return 0 on success, -1 on error.
+/*
+ 将 len 个字节从 src 复制到给定页表中的虚拟地址 dstva
+*/
 int
 copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
 {
+  /*
+    流程：1、找到虚拟地址对应的虚拟页表起始地址。
+          2、通过虚拟页表找到对应的物理页表起始地址
+          3、如果剩余空间大于要拷贝的数据长度，只拷贝数据长度部分
+          4、在物理页表中，以(void *)(pa0 + (dstva - va0))地址开始，将n个字节的src，复制到对应位置
+  */
+
   uint64 n, va0, pa0;
 
   while(len > 0){
-    va0 = PGROUNDDOWN(dstva);
-    pa0 = walkaddr(pagetable, va0);
+    va0 = PGROUNDDOWN(dstva);   // 找到虚拟地址对应的虚拟页表起始地址
+    pa0 = walkaddr(pagetable, va0);   // 通过虚拟页表找到对应的物理页表起始地址
     if(pa0 == 0)
       return -1;
-    n = PGSIZE - (dstva - va0);
+    n = PGSIZE - (dstva - va0);   // 计算该页表的剩余空间
+
+    // 如果剩余空间大于要拷贝的数据长度，只拷贝数据长度部分
     if(n > len)
       n = len;
-    memmove((void *)(pa0 + (dstva - va0)), src, n);
+
+    /*
+      在物理页表中，以(void *)(pa0 + (dstva - va0))地址开始，将n个字节的src，复制到对应位置
+    */
+    memmove((void *)(pa0 + (dstva - va0)), src, n); 
 
     len -= n;
     src += n;

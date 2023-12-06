@@ -6,9 +6,9 @@
 #include "proc.h"
 #include "defs.h"
 
-struct cpu cpus[NCPU];
+struct cpu cpus[NCPU];      // 当前 CPU 数组
 
-struct proc proc[NPROC];
+struct proc proc[NPROC];    // 当前 进程 数组
 
 struct proc *initproc;
 
@@ -695,4 +695,17 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+// 获取 the number of processes whose state is not UNUSED
+uint64
+getnum_unused_pro(void) {
+  uint64 n = 0;
+  for (struct proc *p = proc; p < &proc[NPROC];  p++) {
+    if (p->state != UNUSED) {
+      n++;
+    }
+  }
+  
+  return n;
 }

@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
 
 uint64
 sys_exit(void)
@@ -105,5 +106,30 @@ sys_trace(void)
     return -1;
   
   myproc()->tracemask = tracemask;
+  return 0;
+}
+
+uint64
+sys_sysinfo(void)
+{
+  uint64 freemem = getFreeMemSize();
+  uint64 process = getnum_unused_pro();
+
+  uint64 addr;
+  if (argaddr(0, &addr) < 0) {
+    return -1;
+  }
+
+  struct sysinfo info;
+  info.freemem = freemem;
+  info.nproc = process;
+  
+  /*
+    将内核空间的info复制回用户空间
+    直接通过虚拟地址操作的物理地址
+  */
+  if (copyout(myproc()->pagetable, addr, (char *)&info, sizeof(info)) < 0)
+    return -1;
+  
   return 0;
 }
