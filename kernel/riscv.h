@@ -335,6 +335,11 @@ sfence_vma()
 // shift a physical address to the right place for a PTE.
 #define PA2PTE(pa) ((((uint64)pa) >> 12) << 10)
 
+/*
+  将该PTE转换成对应的物理地址
+  因为PTE是54位的，高44位是物理地址，低10位是flag。但是在xv6中实际物理地址是56位。
+  所有右移10位将flag位消除，然后左移动12位变成56位
+*/
 #define PTE2PA(pte) (((pte) >> 10) << 12)
 
 #define PTE_FLAGS(pte) ((pte) & 0x3FF)

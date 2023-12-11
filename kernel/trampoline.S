@@ -93,6 +93,7 @@ userret:
         # a1: user page table, for satp.
 
         # switch to the user page table.
+        # 刷新TLB缓存，reloading the satp registers
         csrw satp, a1
         sfence.vma zero, zero
 

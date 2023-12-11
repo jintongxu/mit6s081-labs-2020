@@ -7,8 +7,17 @@
 #include "fs.h"
 
 /*
+  kvm开头的函数用于操作内核页表
+  uvm开头的函数用户操作用户页表
+  other functions are
+  used for both
+*/
+
+/*
  * the kernel's page table.
  */
+
+// may be either the kernel page table, or one of the perprocess page tables
 pagetable_t kernel_pagetable;
 
 extern char etext[];  // kernel.ld sets this to end of kernel code.
@@ -68,6 +77,9 @@ kvminithart()
 //   21..29 -- 9 bits of level-1 index.
 //   12..20 -- 9 bits of level-0 index.
 //    0..11 -- 12 bits of byte offset within the page.
+/*
+  finds the PTE for a virtual address, and mappages, which installs PTEs for new mappings
+*/
 pte_t *
 walk(pagetable_t pagetable, uint64 va, int alloc)
 {
@@ -82,9 +94,11 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
       if(!alloc || (pagetable = (pde_t*)kalloc()) == 0)
         return 0;
       memset(pagetable, 0, PGSIZE);
+      // 如果没有找到该级对应的PTE,就映射一个新的，中间PTE的flag位只设置了 PTE_V 位
       *pte = PA2PTE(pagetable) | PTE_V;
     }
   }
+  // 返回虚拟地址对应的最低级的页表项的指针
   return &pagetable[PX(0, va)];
 }
 
@@ -269,7 +283,7 @@ uvmdealloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz)
   return newsz;
 }
 
-// Recursively free page-table pages.
+// Recursively（递归的） free page-table pages.
 // All leaf mappings must already have been removed.
 void
 freewalk(pagetable_t pagetable)
@@ -439,4 +453,30 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   } else {
     return -1;
   }
+}
+
+void 
+vmprint(pagetable_t pagetable, int step) {
+
+  if (step == 1) {
+    printf("page table %p\n", pagetable);
+  }
+
+  static char* tmp[] = {"", "..", ".. ..", ".. .. .."}; 
+
+  // 类似 dfs
+  for(int i = 0; i < 512; i++){
+    pte_t pte = pagetable[i];
+    if(pte & PTE_V){
+      // this PTE points to a lower-level page table.
+      uint64 child = PTE2PA(pte);
+      printf("%s%d: pte %p pa %p\n", tmp[step], i, pte, child);
+      if((pte & (PTE_R|PTE_W|PTE_X)) == 0) {
+        // 如果不是最后一层，就循环打印子PTE
+        vmprint((pagetable_t)child, step+1);
+      }
+      
+    }
+  }
+
 }

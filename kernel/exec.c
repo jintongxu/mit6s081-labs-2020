@@ -30,6 +30,7 @@ exec(char *path, char **argv)
   ilock(ip);
 
   // Check ELF header
+  // If the ELF header has the right magic number, exec assumes that the binary is well-formed
   if(readi(ip, 0, (uint64)&elf, 0, sizeof(elf)) != sizeof(elf))
     goto bad;
   if(elf.magic != ELF_MAGIC)
@@ -116,6 +117,9 @@ exec(char *path, char **argv)
   p->trapframe->sp = sp; // initial stack pointer
   proc_freepagetable(oldpagetable, oldsz);
 
+
+  vmprint(p->pagetable, 1);
+
   return argc; // this ends up in a0, the first argument to main(argc, argv)
 
  bad:
@@ -132,6 +136,10 @@ exec(char *path, char **argv)
 // va must be page-aligned
 // and the pages from va to va+sz must already be mapped.
 // Returns 0 on success, -1 on failure.
+/*
+  loadseg uses walkaddr to find the physical address of the allocated memory at which to write each page of the ELF segment, 
+  and readi to read from the file.
+*/
 static int
 loadseg(pagetable_t pagetable, uint64 va, struct inode *ip, uint offset, uint sz)
 {

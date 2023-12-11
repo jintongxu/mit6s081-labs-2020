@@ -4,7 +4,7 @@
 
 // File header
 struct elfhdr {
-  uint magic;  // must equal ELF_MAGIC
+  uint magic;  // must equal ELF_MAGIC  0x7F, ‘E’, ‘L’, ‘F’
   uchar elf[12];
   ushort type;
   ushort machine;

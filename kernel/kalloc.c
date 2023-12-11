@@ -23,6 +23,10 @@ struct {
   struct run *freelist;
 } kmem;
 
+/*
+  initialize the allocator
+  initializes the free list to hold every page between the end of the kernel and PHYSTOP.
+*/
 void
 kinit()
 {
@@ -30,11 +34,15 @@ kinit()
   freerange(end, (void*)PHYSTOP);
 }
 
+// add memory to the free list via per-page calls to kfree
 void
 freerange(void *pa_start, void *pa_end)
 {
   char *p;
+  // uses PGROUNDUP to ensure that it frees only aligned physical addresses
   p = (char*)PGROUNDUP((uint64)pa_start);
+
+  // The allocator starts with no memory; these calls to kfree give it some to manage.
   for(; p + PGSIZE <= (char*)pa_end; p += PGSIZE)
     kfree(p);
 }
@@ -47,18 +55,24 @@ void
 kfree(void *pa)
 {
   struct run *r;
-
+  
+  // 检查传入的地址 pa 是否合法
+  // 如果 pa 不是 PGSIZE（4096）的倍数，或者 pa 小于 end（内核结束位置），或者 pa 大于等于 PHYSTOP（物理内存结束位置）// every page between the end of the kernel and PHYSTOP
   if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= PHYSTOP)
     panic("kfree");
 
   // Fill with junk to catch dangling refs.
+  // begins by setting every byte in the memory being freed to the value 1
+  // This will cause code that uses memory after freeing it (uses “dangling references”) to read garbage instead of the old valid contents
   memset(pa, 1, PGSIZE);
 
   r = (struct run*)pa;
 
+  // Then kfree prepends the page to the free list
+  // 将释放的页面添加到空闲链表的头部
   acquire(&kmem.lock);
-  r->next = kmem.freelist;
-  kmem.freelist = r;
+  r->next = kmem.freelist;  // 将释放的页面连接到空闲链表
+  kmem.freelist = r;   // 将空闲链表的头部更新为释放的页面
   release(&kmem.lock);
 }
 
