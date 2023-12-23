@@ -1,3 +1,0 @@
-## Introduce
-
-This branch is the source code of xv6-riscv. If you want to see the code of the corresponding lab, please switch to the corresponding lab branch.
