@@ -1,7 +1,33 @@
 [
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
+      "-Wall",
+      "-Werror",
+      "-O",
+      "-fno-omit-frame-pointer",
+      "-ggdb",
+      "-DSOL_TRAPS",
+      "-DLAB_TRAPS",
+      "-mcmodel=medany",
+      "-ffreestanding",
+      "-fno-common",
+      "-mno-relax",
+      "-I.",
+      "-fno-stack-protector",
+      "-fno-pie",
+      "-c",
+      "-o",
+      "kernel/bio.o",
+      "kernel/bio.c"
+    ],
+    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
+    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/kernel/bio.c",
+    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/kernel/bio.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -27,7 +53,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -53,7 +79,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -79,7 +105,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -105,7 +131,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -131,7 +157,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -157,7 +183,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -183,7 +209,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-c",
       "-o",
       "kernel/kernelvec.o",
@@ -195,7 +221,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -221,7 +247,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -247,7 +273,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -277,388 +303,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
-      "-c",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-Werror",
-      "-Wall",
-      "-I.",
-      "-o",
-      "mkfs/mkfs",
-      "mkfs/mkfs.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/mkfs/mkfs.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/mkfs/mkfs"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/ulib.o",
-      "user/ulib.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ulib.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ulib.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/usys.o",
-      "user/usys.S"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/usys.S",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/usys.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/printf.o",
-      "user/printf.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/printf.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/printf.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/umalloc.o",
-      "user/umalloc.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/umalloc.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/umalloc.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/cat.o",
-      "user/cat.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/cat.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/cat.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/echo.o",
-      "user/echo.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/echo.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/echo.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/forktest.o",
-      "user/forktest.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/forktest.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/forktest.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/grep.o",
-      "user/grep.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/grep.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/grep.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/init.o",
-      "user/init.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/init.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/init.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/kill.o",
-      "user/kill.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/kill.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/kill.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/ln.o",
-      "user/ln.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ln.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ln.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/ls.o",
-      "user/ls.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ls.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/ls.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/mkdir.o",
-      "user/mkdir.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/mkdir.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/mkdir.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
-      "-Wall",
-      "-Werror",
-      "-O",
-      "-fno-omit-frame-pointer",
-      "-ggdb",
-      "-DSOL_TRAPS",
-      "-DLAB_TRAPS",
-      "-mcmodel=medany",
-      "-ffreestanding",
-      "-fno-common",
-      "-mno-relax",
-      "-I.",
-      "-fno-stack-protector",
-      "-fno-pie",
-      "-c",
-      "-o",
-      "user/rm.o",
-      "user/rm.c"
-    ],
-    "directory": "/home/rafael/jintongxu/mit6s081-labs-2020",
-    "file": "/home/rafael/jintongxu/mit6s081-labs-2020/user/rm.c",
-    "output": "/home/rafael/jintongxu/mit6s081-labs-2020/user/rm.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -684,7 +329,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -710,7 +355,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -736,7 +381,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -762,7 +407,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -788,7 +433,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -814,7 +459,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
@@ -840,7 +485,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/riscv64-linux-gnu-gcc",
+      "/usr/bin/riscv64-unknown-elf-gcc",
       "-Wall",
       "-Werror",
       "-O",
