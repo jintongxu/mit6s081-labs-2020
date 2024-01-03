@@ -26,9 +26,11 @@ uservec:
         
 	# swap a0 and sscratch
         # so that a0 is TRAPFRAME
+        # 交换 a0 和 sscratch 的值。sscratch指向陷阱帧
         csrrw a0, sscratch, a0
 
         # save the user registers in TRAPFRAME
+        # 陷入trap后，保护现场，将当前寄存器等数据放到陷阱帧中
         sd ra, 40(a0)
         sd sp, 48(a0)
         sd gp, 56(a0)
