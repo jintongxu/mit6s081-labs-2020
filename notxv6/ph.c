@@ -17,6 +17,8 @@ struct entry *table[NBUCKET];
 int keys[NKEYS];
 int nthread = 1;
 
+pthread_mutex_t locks[NBUCKET];            // declare a lock
+
 double
 now()
 {
@@ -39,6 +41,7 @@ static
 void put(int key, int value)
 {
   int i = key % NBUCKET;
+  pthread_mutex_lock(&locks[i]);       // acquire lock,给单独的哈希桶上锁.
 
   // is the key already present?
   struct entry *e = 0;
@@ -53,12 +56,14 @@ void put(int key, int value)
     // the new is new.
     insert(key, value, &table[i], table[i]);
   }
+  pthread_mutex_unlock(&locks[i]);       // release lock
 }
 
 static struct entry*
 get(int key)
 {
   int i = key % NBUCKET;
+  pthread_mutex_lock(&locks[i]);       // acquire lock,给单独的哈希桶上锁.
 
 
   struct entry *e = 0;
@@ -66,6 +71,7 @@ get(int key)
     if (e->key == key) break;
   }
 
+  pthread_mutex_unlock(&locks[i]);       // release lock
   return e;
 }
 
@@ -102,6 +108,11 @@ main(int argc, char *argv[])
   pthread_t *tha;
   void *value;
   double t1, t0;
+
+  for (int i = 0; i < NBUCKET; i++) {
+    pthread_mutex_init(&locks[i], NULL);  // 一个哈希桶添加一个锁
+  }
+
 
   if (argc < 2) {
     fprintf(stderr, "Usage: %s nthreads\n", argv[0]);
