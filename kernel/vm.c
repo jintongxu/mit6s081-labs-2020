@@ -5,6 +5,11 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
+#include "fcntl.h"
+#include "spinlock.h"
+#include "sleeplock.h"
+#include "file.h"
+#include "proc.h"
 
 /*
  * the kernel's page table.
@@ -427,5 +432,47 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return 0;
   } else {
     return -1;
+  }
+}
+
+// Remove n BYTES (not pages) of vma mappings starting from va. va must be 
+// page-aligned. The mappings NEED NOT exist.
+// Also free the physical memory and write back vma data to disk if necessary
+void 
+vmaunmap(pagetable_t pagetable, uint64 va, uint64 nbytes, struct vma *v)
+{
+  // 查找范围内的每一个页,检测其dirty bit(D)是否被设置,如果被设置,则代表该页被修改过,需要将其写入磁盘
+  // 注意:如果不是每一个页需要完整的写回,这里需要处理开头页不完整,结尾页不完整以及中间完整页的情况
+
+  uint64 a;
+  pte_t *pte;
+
+  // borrowed from "uvmunmap"
+  for (a = va; a < va + nbytes; a += PGSIZE) {
+    if ((pte = walk(pagetable, a, 0)) == 0)
+      panic("sys_munmap: walk");
+    if(PTE_FLAGS(*pte) == PTE_V)
+      panic("sys_munmap: not a leaf");
+    if(*pte & PTE_V) {
+      uint64 pa = PTE2PA(*pte);
+      if((*pte & PTE_D) && (v->flags & MAP_SHARED)) { // dirty, need to write back to dist
+        begin_op();
+        ilock(v->f->ip);
+        uint64 aoff = a - v->vastart;   // offset relative to the start fo memory range
+        if (aoff < 0) {  // if the first page if not a full 4k page
+          writei(v->f->ip, 0, pa + (-aoff), v->offset, PGSIZE + aoff);
+        } else if (aoff + PGSIZE > v->sz) {
+          writei(v->f->ip, 0, pa, v->offset + aoff, v->sz - aoff);
+        } else {
+          writei(v->f->ip, 0, pa, v->offset + aoff, PGSIZE);
+        }
+        iunlock(v->f->ip);
+        end_op();
+      }
+      kfree((void*)pa);
+      *pte = 0;
+    }
+  
+
   }
 }
